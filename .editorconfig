@@ -1,4 +1,4 @@
-# EditorConfig helps developers define and maintain consistent coding styles between different editors and IDEs
+# EditorConfig ajuda os desenvolvedores a definir e manter estilos de codificação consistentes entre diferentes editores e IDEs
 # editorconfig.org
 
 root = true
@@ -6,8 +6,6 @@ root = true
 [*]
 indent_style = space
 indent_size = 2
-
-# We recommend you to keep these unchanged
 end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = true
