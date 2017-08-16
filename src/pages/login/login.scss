@@ -1,55 +1,107 @@
 page-login {
- 
-  .login-content {
-    background: #fff; //#579859
- 
-    .logo-row {
-      padding-top: 50px;
-      padding-bottom: 20px;
-    }
- 
-    .login-box {
-      background: #52a565;
-      border-radius: 10px !important;
-      padding: 20px 20px 0px 20px;
-      margin-top: 30px;
-    }
- 
-    ion-row {
-       align-items: center;
-       text-align: center;
-     }
- 
-     ion-item {
-         border-radius: 5px !important;
-         padding-left: 5px !important;
-         font-size: 0.9em;
-         margin-bottom: 10px;
-         border: 1px solid #fff;
-         border-bottom: 0px !important;
-         box-shadow: none !important;
-     }
- 
-     .signup-col {
-       margin: 0px 16px 0px 16px;
-       padding-bottom: 20px;
-     }
- 
-     .item-inner {
-       border-bottom-color: #fff !important;
-       box-shadow: none !important;
-     }
- 
-     .submit-btn {
-       background: #579859;
-       border-radius: 5px !important;
-       border: 1px solid #fff;
-     }
- 
-     .register-btn {
-       color: #fff;
-       font-size: 0.8em;
-     }
+
+  .container {
+    font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial", "sans-serif";
+    background: #579859;
   }
- 
+  
+  .signin-card {
+    animation: cardEnter 0.75s ease-in-out 0.5s;
+    animation-fill-mode: both;
+    opacity: 0;
+    max-width: 350px;
+    border-radius: 2px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #eceff1;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    
+    .logo-image {
+      text-align: center;
+    }
+    
+    h1 {
+      text-align: center;
+    }
+   
+    p {
+      text-align: center;
+    }
+
+    .display {
+      font-size: 28px;
+      font-weight: 100;
+      line-height: 1.2;
+      color: #757575;
+      text-transform: inherit;
+      letter-spacing: inherit;
+    }
+
+    .item-md {
+      padding: 0;
+      background: #eceff1;
+    }
+
+  }
+
+  @-webkit-keyframes cardEnter {
+    0% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      opacity: 0;
+      transform: scale3d(0.3, 0.3, 0.3);
+    }
+    20% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+    40% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      transform: scale3d(0.9, 0.9, 0.9);
+    }
+    60% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      opacity: 1;
+      transform: scale3d(1.03, 1.03, 1.03);
+    }
+    80% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      transform: scale3d(0.97, 0.97, 0.97);
+    }
+    100% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      opacity: 1;
+      transform: scale3d(1, 1, 1);
+    }
+  }
+
+  @keyframes cardEnter {
+    0% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      opacity: 0;
+      transform: scale3d(0.3, 0.3, 0.3);
+    }
+    20% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      transform: scale3d(1.1, 1.1, 1.1);
+    }
+    40% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      transform: scale3d(0.9, 0.9, 0.9);
+    }
+    60% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      opacity: 1;
+      transform: scale3d(1.03, 1.03, 1.03);
+    }
+    80% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      transform: scale3d(0.97, 0.97, 0.97);
+    }
+    100% {
+      transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      opacity: 1;
+      transform: scale3d(1, 1, 1);
+    }
+  }
+
 }

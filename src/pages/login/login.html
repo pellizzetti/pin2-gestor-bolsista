@@ -1,43 +1,40 @@
-<!--<ion-header>
-
-  <ion-navbar>
-    <ion-title>Login</ion-title>
-  </ion-navbar>
-
-</ion-header>-->
-
-<ion-content class="login-content" padding>
-  <ion-row class="logo-row">
-    <ion-col></ion-col>
-    <ion-col width-67>
-      <img src="http://semanalixozero.com.br/wp-content/uploads/easy_logo_slider/528425logo-joinville-16.png"/>
-    </ion-col>
-    <ion-col></ion-col>
-  </ion-row>
-  <div class="login-box">
+<!-- Container da página login -->
+<ion-content class="container">
+  <!-- wrapper do card -->
+  <div id="login" class="signin-card">
+    <!-- logo da UDESC -->
+    <div class="logo-image">
+      <img src="assets/imgs/logo.png" alt="Logo UDESC" title="Logo UDESC" width="140">
+    </div>
+    <!-- título do card -->
+    <h1 class="display">Gestor Bolsista</h1>
+    <!-- form do login -->
     <form (ngSubmit)="login()" #registerForm="ngForm">
+      <!-- grupo dos componentes de entrada do login -->
       <ion-row>
         <ion-col>
-          <ion-list inset>
-            
+            <!-- componente e-mail -->
             <ion-item>
-              <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
+              <ion-label color="holder" floating>e-mail</ion-label>
+              <ion-input name="email" [(ngModel)]="registerCredentials.email" type="email" alt="e-mail" required clearInput></ion-input>
             </ion-item>
-            
+            <!-- componente senha -->
             <ion-item>
-              <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+              <ion-label color="holder" floating>senha</ion-label>
+              <ion-input name="password" [(ngModel)]="registerCredentials.password" type="password" alt="senha" required clearInput></ion-input>
             </ion-item>
-            
-          </ion-list>
         </ion-col>
       </ion-row>
-      
+      <!-- grupo do botão -->
       <ion-row>
-        <ion-col class="signup-col">
-          <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Login</button>
+        <ion-col>
+          <!-- botão ENTRAR -->
+          <button type="submit" name="submit" [disabled]="!registerForm.form.valid" alt="ENTRAR" ion-button icon-right full>
+            ENTRAR
+            <ion-icon name="arrow-round-forward"></ion-icon>
+          </button>
         </ion-col>
       </ion-row>
-      
     </form>
   </div>
 </ion-content>
