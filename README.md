@@ -18,6 +18,12 @@ Clone o repositório:
 git clone https://github.com/pellizzetti/pin2-gestor-bolsista pin2 && cd pin2
 ```
 
+Instale o Ionic e Cordova:
+
+```
+npm install -g cordova ionic
+```
+
 Instale as dependências:
 
 ```
