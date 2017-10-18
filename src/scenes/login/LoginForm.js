@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Button, TextInput, StyleSheet } from 'react-native';
+import { Alert, AsyncStorage, Button, StyleSheet } from 'react-native';
 import { View } from 'react-native-animatable';
+import { NavigationActions } from 'react-navigation';
 
 import metrics from '../../config/metrics';
+import TextInput from './TextInput';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,11 +24,6 @@ const styles = StyleSheet.create({
     color: '#3E464D',
     fontWeight: 'bold',
   },
-  signupLink: {
-    color: 'rgba(255,255,255,0.6)',
-    alignSelf: 'center',
-    padding: 20,
-  },
 });
 
 export default class LoginForm extends Component {
@@ -39,57 +36,78 @@ export default class LoginForm extends Component {
       isLoading: false,
     };
 
-    this.onLoginPress = this.onLoginPress.bind(this);
+    this.signIn = this.signIn.bind(this);
+    this.focusNextField = this.focusNextField.bind(this);
   }
 
-  onLoginPress = (username, password) => {
+  signIn() {
+    const { email, password } = this.state;
+    const { navigation } = this.props;
+
     this.setState({ isLoading: true });
-    setTimeout(() => this.setState({ isLoading: false }), 1000);
-  };
+
+    // Api.post('/auth/authenticate', { email, password })
+    //   .then(response => AsyncStorage.setItem('@Gestor:token', response.token))
+    //   .then(() => Api.get('/auth/user'))
+    //   .then((response) => {
+    //     global.user = response.user;
+    //     return AsyncStorage.setItem('@RocketSpot:user', JSON.stringify(response.user));
+    //   })
+    //   .then(() => {
+    //     const actionToDispatch = NavigationActions.reset({
+    //       index: 0,
+    //       actions: [NavigationActions.navigate({ routeName: 'Home' })],
+    //     });
+
+    //     navigation.dispatch(actionToDispatch);
+    //   })
+    //   .catch((err) => {
+    //     this.setState({ isLoading: false });
+    //     console.log('erro', err);
+    //   });
+  }
+
+  focusNextField() {
+    this.passwordInput.focus();
+  }
 
   render() {
     const { email, password, isLoading } = this.state;
     const isValid = email !== '' && password !== '';
     return (
       <View style={styles.container}>
-        <View
-          style={styles.form}
-          ref={(ref) => {
-            this.formRef = ref;
-          }}
-        >
+        <View style={styles.form}>
           <TextInput
             name="email"
-            ref={ref => (this.emailInputRef = ref)}
-            placeholder="Email"
+            placeholder="E-mail"
             keyboardType="email-address"
             editable={!isLoading}
             returnKeyType="next"
             blurOnSubmit={false}
-            withRef
-            onSubmitEditing={() => this.passwordInputRef.focus()}
+            onSubmitEditing={this.focusNextField}
             onChangeText={value => this.setState({ email: value })}
             isEnabled={!isLoading}
           />
           <TextInput
             name="password"
-            ref={ref => (this.passwordInputRef = ref)}
-            placeholder="Password"
+            placeholder="Senha"
             editable={!isLoading}
             returnKeyType="done"
+            ref={(input) => {
+              this.passwordInput = input;
+            }}
             secureTextEntry
-            withRef
             onChangeText={value => this.setState({ password: value })}
             isEnabled={!isLoading}
           />
         </View>
         <View style={styles.footer}>
-          <View ref={ref => (this.buttonRef = ref)} animation="bounceIn" duration={600} delay={400}>
+          <View animation="bounceIn" duration={600} delay={400}>
             <Button
-              onPress={() => this.onLoginPress(email, password)}
-              title="Log In"
-              color="#841584"
-              accessibilityLabel="Learn more about this purple button"
+              onPress={() => this.signIn(email, password)}
+              title="Entrar"
+              color="#2c4e2d"
+              disabled={!isValid}
             />
           </View>
         </View>

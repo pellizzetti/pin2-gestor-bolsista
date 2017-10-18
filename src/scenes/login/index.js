@@ -1,17 +1,12 @@
-import React, { Component } from 'react';
-import {
-  KeyboardAvoidingView,
-  Platform,
-  StyleSheet,
-  UIManager,
-} from 'react-native';
-import { Image, View } from 'react-native-animatable';
+import React from 'react';
+import { KeyboardAvoidingView, Platform, StyleSheet, UIManager } from 'react-native';
+import { Image, View, Text } from 'react-native-animatable';
 
 import imgLogo from '../../assets/imgs/logo.png';
 import metrics from '../../config/metrics';
 import LoginForm from './LoginForm';
 
-const IMAGE_WIDTH = metrics.DEVICE_WIDTH * 0.8;
+const IMAGE_WIDTH = metrics.DEVICE_WIDTH * 0.7;
 
 if (Platform.OS === 'android') UIManager.setLayoutAnimationEnabledExperimental(true);
 
@@ -32,32 +27,26 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginVertical: 30,
   },
-  bottom: {
-    backgroundColor: '#1976D2',
+  logoTitle: {
+    alignSelf: 'center',
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: '#647064',
   },
 });
 
-export default class LogIn extends Component {
-  render() {
-    const formStyle = false ? { height: 0 } : { marginTop: 40 };
-    return (
-      <View style={styles.container}>
-        <Image
-          animation="bounceIn"
-          duration={1200}
-          delay={200}
-          ref={ref => (this.logoImgRef = ref)}
-          style={styles.logoImg}
-          source={imgLogo}
-        />
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={-100}
-          behavior="padding"
-          style={[formStyle, styles.bottom]}
-        >
-          <LoginForm />
-        </KeyboardAvoidingView>
-      </View>
-    );
-  }
-}
+export default () => (
+  <View style={styles.container}>
+    <Image
+      animation="bounceIn"
+      duration={1200}
+      delay={200}
+      style={styles.logoImg}
+      source={imgLogo}
+    />
+    <Text style={styles.logoTitle}>Gestor Bolsistas</Text>
+    <KeyboardAvoidingView keyboardVerticalOffset={-100} behavior="padding">
+      <LoginForm />
+    </KeyboardAvoidingView>
+  </View>
+);
