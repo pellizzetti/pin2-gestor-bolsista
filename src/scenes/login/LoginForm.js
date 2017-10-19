@@ -40,31 +40,31 @@ export default class LoginForm extends Component {
     this.focusNextField = this.focusNextField.bind(this);
   }
 
-  signIn() {
+  async signIn() {
     const { email, password } = this.state;
     const { navigation } = this.props;
 
     this.setState({ isLoading: true });
 
-    // Api.post('/auth/authenticate', { email, password })
-    //   .then(response => AsyncStorage.setItem('@Gestor:token', response.token))
-    //   .then(() => Api.get('/auth/user'))
-    //   .then((response) => {
-    //     global.user = response.user;
-    //     return AsyncStorage.setItem('@RocketSpot:user', JSON.stringify(response.user));
-    //   })
-    //   .then(() => {
-    //     const actionToDispatch = NavigationActions.reset({
-    //       index: 0,
-    //       actions: [NavigationActions.navigate({ routeName: 'Home' })],
-    //     });
+    try {
+      const response = await fetch('http://192.168.0.159:1337/login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      const responseJson = await response.json();
 
-    //     navigation.dispatch(actionToDispatch);
-    //   })
-    //   .catch((err) => {
-    //     this.setState({ isLoading: false });
-    //     console.log('erro', err);
-    //   });
+      return responseJson;
+    } catch (err) {
+      this.setState({ isLoading: false });
+      console.error(`Erro - fetch: ${err}`);
+    }
   }
 
   focusNextField() {

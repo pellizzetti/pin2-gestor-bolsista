@@ -45,7 +45,7 @@ export default () => (
       source={imgLogo}
     />
     <Text style={styles.logoTitle}>Gestor Bolsistas</Text>
-    <KeyboardAvoidingView keyboardVerticalOffset={-100} behavior="padding">
+    <KeyboardAvoidingView keyboardVerticalOffset={-225} behavior="padding">
       <LoginForm />
     </KeyboardAvoidingView>
   </View>
