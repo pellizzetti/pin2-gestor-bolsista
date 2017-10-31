@@ -47,7 +47,7 @@ export default class LoginForm extends Component {
     this.setState({ isLoading: true });
 
     try {
-      const response = await fetch('http://192.168.0.5:1337/login', {
+      const response = await fetch('http://192.168.0.159:1337/login', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -63,14 +63,14 @@ export default class LoginForm extends Component {
       if (response.status === 200 && responseJson.auth === true) {
         AsyncStorage.setItem('@GestorBolsista:token', response.jwt);
 
-        const actionToDispatch = NavigationActions.reset({
+        const resetAction = NavigationActions.reset({
           index: 0,
           actions: [NavigationActions.navigate({ routeName: 'Home' })],
         });
 
         this.setState({ isLoading: false });
 
-        navigation.dispatch(actionToDispatch);
+        navigation.dispatch(resetAction);
       } else {
         this.setState({ isLoading: false });
 
@@ -79,7 +79,7 @@ export default class LoginForm extends Component {
     } catch (err) {
       this.setState({ isLoading: false });
 
-      Alert.alert(`Erro - fetch: ${err}`);
+      Alert.alert('Não foi possível conectar ao servidor. :(');
     }
   }
 

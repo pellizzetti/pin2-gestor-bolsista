@@ -16,12 +16,12 @@ export default class SplashScreen extends Component {
     header: null,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     AsyncStorage.getItem('@GestorBolsista:token', (err, result) => {
       console.log(result);
       //global.user = JSON.parse(result);
 
-      if (result != null) {
+      if (result !== null) {
         this.navigateTo('Home');
       } else {
         this.navigateTo('LogIn');
