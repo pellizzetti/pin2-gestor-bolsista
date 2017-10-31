@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, AsyncStorage, Button, StyleSheet } from 'react-native';
+import { Alert, AsyncStorage, Button, StyleSheet, Text } from 'react-native';
 import { View } from 'react-native-animatable';
 import { NavigationActions } from 'react-navigation';
 
@@ -33,11 +33,21 @@ export default class LoginForm extends Component {
     this.state = {
       email: '',
       password: '',
+      isConnected: false,
       isLoading: false,
     };
 
     this.signIn = this.signIn.bind(this);
-    this.focusNextField = this.focusNextField.bind(this);
+  }
+
+  async componentWillMount() {
+    const response = await fetch('http://192.168.0.159:1337/');
+
+    if (response.status === 200) {
+      this.setState({ isConnected: true });
+    } else {
+      this.setState({ isConnected: false });
+    }
   }
 
   async signIn() {
@@ -61,7 +71,11 @@ export default class LoginForm extends Component {
       const responseJson = await response.json();
 
       if (response.status === 200 && responseJson.auth === true) {
-        AsyncStorage.setItem('@GestorBolsista:token', response.jwt);
+        try {
+          await AsyncStorage.setItem('@GestorBolsista:jwt', response.jwt);
+        } catch (error) {
+          Alert.alert('Não foi possível salvar o token retornado pela API. :(');
+        }
 
         const resetAction = NavigationActions.reset({
           index: 0,
@@ -83,15 +97,19 @@ export default class LoginForm extends Component {
     }
   }
 
-  focusNextField() {
-    this.passwordInput.focus();
-  }
-
   render() {
-    const { email, password, isLoading } = this.state;
-    const isValid = email !== '' && password !== '';
+    const {
+      email,
+      password,
+      isConnected,
+      isLoading,
+    } = this.state;
+    const isValid = email !== '' && password !== '' && isConnected;
     return (
       <View style={styles.container}>
+        {!isConnected &&
+          <Text>Não foi possível atingir a API. Você está conectado a rede local da UDESC?</Text>
+        }
         <View style={styles.form}>
           <TextInput
             name="email"
@@ -100,7 +118,7 @@ export default class LoginForm extends Component {
             editable={!isLoading}
             returnKeyType="next"
             blurOnSubmit={false}
-            onSubmitEditing={this.focusNextField}
+            onSubmitEditing={() => this.passwordInput.focus()}
             onChangeText={value => this.setState({ email: value })}
             isEnabled={!isLoading}
           />
@@ -109,6 +127,7 @@ export default class LoginForm extends Component {
             placeholder="Senha"
             editable={!isLoading}
             returnKeyType="done"
+            autoCorrect={false}
             ref={(input) => {
               this.passwordInput = input;
             }}

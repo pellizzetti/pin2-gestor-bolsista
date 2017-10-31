@@ -28,8 +28,6 @@ export default class AuthTextInput extends Component {
     isFocused: false,
   };
 
-  focus = () => this.textInputRef.focus();
-
   render() {
     const { isEnabled, ...otherProps } = this.props;
     const { isFocused } = this.state;
@@ -39,7 +37,6 @@ export default class AuthTextInput extends Component {
       <View style={styles.container}>
         <View style={[styles.textInputWrapper, { borderColor }]}>
           <TextInput
-            ref={ref => (this.textInputRef = ref)}
             autoCapitalize="none"
             autoCorrect={false}
             style={[styles.textInput, { color }]}

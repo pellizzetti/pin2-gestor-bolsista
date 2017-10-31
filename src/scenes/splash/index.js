@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, ActivityIndicator, AsyncStorage } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, AsyncStorage, Alert } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 
 const styles = StyleSheet.create({
@@ -12,21 +12,19 @@ const styles = StyleSheet.create({
 });
 
 export default class SplashScreen extends Component {
-  static navigationOptions = {
-    header: null,
-  };
+  async componentWillMount() {
+    try {
+      const jwt = await AsyncStorage.getItem('@GestorBolsista:jwt');
+      console.log(jwt);
 
-  componentDidMount() {
-    AsyncStorage.getItem('@GestorBolsista:token', (err, result) => {
-      console.log(result);
-      //global.user = JSON.parse(result);
-
-      if (result !== null) {
+      if (jwt !== null) {
         this.navigateTo('Home');
       } else {
         this.navigateTo('LogIn');
       }
-    });
+    } catch (error) {
+      Alert.alert('Não foi possível buscar o token. :(');
+    }
   }
 
   navigateTo(routeName) {
