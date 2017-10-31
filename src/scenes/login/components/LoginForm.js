@@ -3,7 +3,7 @@ import { Alert, AsyncStorage, Button, StyleSheet } from 'react-native';
 import { View } from 'react-native-animatable';
 import { NavigationActions } from 'react-navigation';
 
-import metrics from '../../config/metrics';
+import metrics from '../../../config/metrics';
 import TextInput from './TextInput';
 
 const styles = StyleSheet.create({
@@ -47,7 +47,7 @@ export default class LoginForm extends Component {
     this.setState({ isLoading: true });
 
     try {
-      const response = await fetch('http://192.168.0.159:1337/login', {
+      const response = await fetch('http://192.168.0.5:1337/login', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -60,10 +60,26 @@ export default class LoginForm extends Component {
       });
       const responseJson = await response.json();
 
-      return responseJson;
+      if (response.status === 200 && responseJson.auth === true) {
+        AsyncStorage.setItem('@GestorBolsista:token', response.jwt);
+
+        const actionToDispatch = NavigationActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: 'Home' })],
+        });
+
+        this.setState({ isLoading: false });
+
+        navigation.dispatch(actionToDispatch);
+      } else {
+        this.setState({ isLoading: false });
+
+        Alert.alert(responseJson.msg);
+      }
     } catch (err) {
       this.setState({ isLoading: false });
-      console.error(`Erro - fetch: ${err}`);
+
+      Alert.alert(`Erro - fetch: ${err}`);
     }
   }
 
@@ -107,6 +123,7 @@ export default class LoginForm extends Component {
               onPress={() => this.signIn(email, password)}
               title="Entrar"
               color="#2c4e2d"
+              loading={isLoading}
               disabled={!isValid}
             />
           </View>
