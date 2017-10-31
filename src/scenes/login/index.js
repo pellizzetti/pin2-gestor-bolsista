@@ -4,7 +4,7 @@ import { Image, View, Text } from 'react-native-animatable';
 
 import imgLogo from '../../assets/imgs/logo.png';
 import metrics from '../../config/metrics';
-import LoginForm from './LoginForm';
+import LoginForm from './components/LoginForm';
 
 const IMAGE_WIDTH = metrics.DEVICE_WIDTH * 0.7;
 
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default () => (
+export default props => (
   <View style={styles.container}>
     <Image
       animation="bounceIn"
@@ -46,7 +46,7 @@ export default () => (
     />
     <Text style={styles.logoTitle}>Gestor Bolsistas</Text>
     <KeyboardAvoidingView keyboardVerticalOffset={-225} behavior="padding">
-      <LoginForm />
+      <LoginForm {...props} />
     </KeyboardAvoidingView>
   </View>
 );
