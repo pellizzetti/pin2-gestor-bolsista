@@ -5,7 +5,7 @@ import { NavigationActions } from 'react-navigation';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0c95b2',
+    backgroundColor: '#308240',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -17,8 +17,9 @@ export default class SplashScreen extends Component {
   };
 
   componentWillMount() {
-    AsyncStorage.getItem('@Gestor:user', (err, result) => {
-      global.user = JSON.parse(result);
+    AsyncStorage.getItem('@GestorBolsista:token', (err, result) => {
+      console.log(result);
+      //global.user = JSON.parse(result);
 
       if (result != null) {
         this.navigateTo('Home');
