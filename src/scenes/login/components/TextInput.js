@@ -30,6 +30,8 @@ export default class AuthTextInput extends Component {
 
   render() {
     const { isEnabled, ...otherProps } = this.props;
+    console.log('this.props', this.props);
+    console.log('...otherProps', ...otherProps);
     const { isFocused } = this.state;
     const color = isEnabled ? '#578458' : 'gray';
     const borderColor = isFocused ? '#647064' : '#b0c1b0';

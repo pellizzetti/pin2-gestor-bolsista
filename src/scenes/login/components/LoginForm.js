@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Alert, AsyncStorage, Button, StyleSheet, Text } from 'react-native';
+import { Alert, AsyncStorage, Button, StyleSheet, Text, TextInput } from 'react-native';
 import { View } from 'react-native-animatable';
 import { NavigationActions } from 'react-navigation';
 
 import metrics from '../../../config/metrics';
-import TextInput from './TextInput';
+//import TextInput from './TextInput';
 
 const styles = StyleSheet.create({
   container: {
@@ -127,10 +127,7 @@ export default class LoginForm extends Component {
             placeholder="Senha"
             editable={!isLoading}
             returnKeyType="done"
-            autoCorrect={false}
-            ref={(input) => {
-              this.passwordInput = input;
-            }}
+            ref={(input) => { this.passwordInput = input; }}
             secureTextEntry
             onChangeText={value => this.setState({ password: value })}
             isEnabled={!isLoading}

@@ -1,3 +1,4 @@
 {
-  "presets": ["react-native"]
+  "plugins": ["react-native-web/babel", "transform-class-properties"],
+  "presets": ["react-native", "es2015"]
 }

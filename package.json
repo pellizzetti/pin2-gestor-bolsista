@@ -4,20 +4,24 @@
 	"private": true,
 	"scripts": {
 		"start": "node node_modules/react-native/local-cli/cli.js start",
+		"run-web": "./node_modules/.bin/webpack-dev-server -d --inline --hot --colors",
+		"web-prod": "./node_modules/.bin/webpack -p",
 		"test": "jest"
 	},
 	"dependencies": {
-		"react": "16.0.0-beta.5",
-		"react-native": "0.49.3",
+		"react": "^16.0.0",
+		"react-dom": "^16.0.0",
+		"react-native": "v0.50.0-rc.2",
 		"react-native-animatable": "^1.2.4",
-		"react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
-		"react-native-fs": "^2.8.1",
-		"react-native-spinkit": "^1.1.1",
+		"react-native-web": "^0.1.13",
 		"react-navigation": "^1.0.0-beta.13"
 	},
 	"devDependencies": {
 		"babel-eslint": "^8.0.1",
 		"babel-jest": "21.2.0",
+		"babel-loader": "^7.1.2",
+		"babel-plugin-transform-class-properties": "^6.24.1",
+		"babel-preset-es2015": "^6.24.1",
 		"babel-preset-react-native": "4.0.0",
 		"eslint": "^4.9.0",
 		"eslint-config-airbnb": "^16.1.0",
@@ -26,7 +30,10 @@
 		"eslint-plugin-react": "^7.4.0",
 		"eslint-plugin-react-native": "^3.1.0",
 		"jest": "21.2.1",
-		"react-test-renderer": "16.0.0-beta.5"
+		"react-test-renderer": "16.0.0-beta.5",
+		"url-loader": "^0.6.2",
+		"webpack": "^3.8.1",
+		"webpack-dev-server": "^2.9.4"
 	},
 	"jest": {
 		"preset": "react-native"
