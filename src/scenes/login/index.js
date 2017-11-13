@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
-import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
-import { Image, Text } from 'react-native-animatable';
+import { Container, Header, Content, Form, Item, Input, Label, Text, Button } from 'native-base';
+import { Image } from 'react-native-animatable';
 
 import imgLogo from '../../assets/imgs/logo.png';
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  logoImg: {
+  img: {
     flex: 1,
     height: null,
     width: width * 0.7,
@@ -15,9 +15,17 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginVertical: 30,
   },
-  logoTitle: {
+  title: {
     alignSelf: 'center',
     fontWeight: 'bold',
+    fontSize: 20,
+    color: '#647064',
+  },
+  buttonContainer: {
+    flex: 1,
+  },
+  button: {
+    alignSelf: 'center',
     fontSize: 20,
     color: '#647064',
   },
@@ -27,16 +35,18 @@ export default class Login extends Component {
   render() {
     return (
       <Container>
+        <Container>
           <Image
             animation="bounceIn"
             duration={1200}
             delay={200}
-            style={styles.logoImg}
+            style={styles.img}
             source={imgLogo}
           />
-          <Text style={styles.logoTitle}>
+          <Text style={styles.title}>
             Gestor Bolsistas
-            </Text>
+          </Text>
+        </Container>
         <Content>
           <Form>
             <Item floatingLabel>
@@ -52,6 +62,11 @@ export default class Login extends Component {
                 getRef={password => this._inputPassword = password}
               />
             </Item>
+            <Container style={styles.buttonContainer}>
+              <Button style={styles.button}>
+                <Text>Entrar</Text>
+              </Button>
+            </Container>
           </Form>
         </Content>
       </Container>
