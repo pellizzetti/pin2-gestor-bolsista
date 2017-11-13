@@ -6,13 +6,21 @@ import Home from '../scenes/home';
 import Report from '../scenes/report';
 
 const HomeNavigator = DrawerNavigator({
-  Home: {
-    screen: Home,
+    Home: {
+      screen: Home,
+    },
+    Report: {
+      screen: Report,
+    },
   },
-  Report: {
-    screen: Report,
-  },
-});
+  {
+    navigationOptions: ({navigation}) => ({
+        headerStyle: { backgroundColor: 'green' },
+        gesturesEnabled: false,
+        headerLeft: <Text onPress={() => navigation.navigate('DrawerOpen')}>Menu</Text>
+    })
+  }
+);
 
 export default StackNavigator({
   SplashScreen: { screen: SplashScreen },
