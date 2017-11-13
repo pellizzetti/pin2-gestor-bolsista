@@ -1,0 +1,3 @@
+rootProject.name = 'gestorbolsista'
+
+include ':app'
