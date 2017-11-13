@@ -21,14 +21,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#647064',
   },
-  buttonContainer: {
-    flex: 1,
-  },
   button: {
+    marginVertical: 15,
     alignSelf: 'center',
-    fontSize: 20,
-    color: '#647064',
+    backgroundColor: '#689b5d',
+    width: width * 0.8,
+    height: 45,
   },
+  buttonText: {
+    color: '#fff',
+    alignSelf: 'center',
+    marginVertical: 10,
+  }
 });
 
 export default class Login extends Component {
@@ -37,10 +41,10 @@ export default class Login extends Component {
       <Container>
         <Container>
           <Image
+            style={styles.img}
             animation="bounceIn"
             duration={1200}
             delay={200}
-            style={styles.img}
             source={imgLogo}
           />
           <Text style={styles.title}>
@@ -62,11 +66,9 @@ export default class Login extends Component {
                 getRef={password => this._inputPassword = password}
               />
             </Item>
-            <Container style={styles.buttonContainer}>
-              <Button style={styles.button}>
-                <Text>Entrar</Text>
-              </Button>
-            </Container>
+            <Button style={styles.button} block capitalize>
+              <Text style={styles.buttonText}>Entrar</Text>
+            </Button>
           </Form>
         </Content>
       </Container>
