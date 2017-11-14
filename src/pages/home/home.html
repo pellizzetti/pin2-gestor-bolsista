@@ -18,7 +18,35 @@
   </ion-navbar>
 </ion-header>
 
+<ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>
+    This column will be 12 columns wide by default,
+    9 columns at the small breakpoint,
+    6 at the medium breakpoint, 4 at large, and 3 at xl.
+  </ion-col>
+
 <ion-content class="home" padding>
-  <h3>Bem-vindo, {{username}}!</h3>
-  Seu e-mail é: {{email}}
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 col-md-3>
+        <button id="checkin" class="checkin">
+          <svg viewBox="0 0 90.594 59.714">
+            <polyline class="check" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-miterlimit="10" points="1.768,23.532 34.415,56.179 88.826,1.768"/>
+          </svg>
+          <span>Check-in</span>
+        </button>
+      </ion-col>
+      <ion-col col-12 col-md-9>
+        <ion-list>
+          <ion-item>
+            <h3>Check-in</h3>
+            <p>14/11/2017 08:30</p>
+          </ion-item>
+          <ion-item>
+            <h3>Check-out</h3>
+            <p>14/11/2017 11:45</p>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
