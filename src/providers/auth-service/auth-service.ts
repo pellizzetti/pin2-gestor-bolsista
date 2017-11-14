@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 //import { Http } from '@angular/http';
 import { Observable } from "rxjs/Observable";
+import { Storage } from '@ionic/storage';
 import "rxjs/add/operator/map";
 
 export class User {
@@ -22,12 +23,11 @@ export class AuthServiceProvider {
       return Observable.throw("Preencha os campos para continuar");
     } else {
       return Observable.create(observer => {
-        // At this point make a request to your backend to make a real check!
-        let access =
-          credentials.password === "pass" && credentials.email === "email";
-        this.currentUser = new User(
-          "Guilherme Pellizzetti",
-          "guilherme.pellizzetti@edu.udesc.br"
+              this.storage.set('jwt', res.jwt)
+                .then(() => {
+                  observer.next(res);
+                  observer.complete();
+                });
         );
         observer.next(access);
         observer.complete();
@@ -47,13 +47,12 @@ export class AuthServiceProvider {
     }
   }
 
-  public getUserInfo(): User {
-    return this.currentUser;
+    return this.storage.get('jwt')
   }
 
   public logout() {
     return Observable.create(observer => {
-      this.currentUser = null;
+      this.storage.remove('jwt');
       observer.next(true);
       observer.complete();
     });
