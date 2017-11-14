@@ -7,11 +7,11 @@ import "rxjs/add/operator/map";
 
 import { API_URL } from '../../app/constants';
 
-  constructor(name: string, email: string) {
-    this.name = name;
-    this.email = email;
+interface Response {
+  auth: boolean;
+  msg: string;
+  jwt: string;
   }
-}
 
 @Injectable()
 export class AuthServiceProvider {
