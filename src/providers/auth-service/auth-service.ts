@@ -4,9 +4,7 @@ import { Observable } from "rxjs/Observable";
 import { Storage } from '@ionic/storage';
 import "rxjs/add/operator/map";
 
-export class User {
-  name: string;
-  email: string;
+import { API_URL } from '../../app/constants';
 
   constructor(name: string, email: string) {
     this.name = name;
