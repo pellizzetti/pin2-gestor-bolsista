@@ -32,11 +32,11 @@ export class LoginPage {
     this.showLoading();
 
     this.auth.login(this.registerCredentials).subscribe(
-      allowed => {
-        if (allowed) {
+      res => {
+        if (res.auth) {
           this.nav.setRoot("HomePage");
-        } else {
-          this.showError("Accesso negado");
+        } else if (res.msg) {
+          this.showError(res.msg);
         }
       },
       error => {

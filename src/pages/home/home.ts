@@ -12,9 +12,14 @@ export class HomePage {
   email: string = "";
 
   constructor(private nav: NavController, private auth: AuthServiceProvider) {
-    let info = this.auth.getUserInfo();
-    this.username = info["name"];
-    this.email = info["email"];
+    this.auth.getUserInfo()
+      .then((userInfo) => {
+        const info = userInfo
+        console.log('info', info)
+      });
+
+    // this.username = info["name"];
+    // this.email = info["email"];
   }
 
   public logout() {
