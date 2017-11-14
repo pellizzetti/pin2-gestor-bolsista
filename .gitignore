@@ -5,12 +5,15 @@
 *.sw[mnpcod]
 *.log
 *.tmp
+*.js.map
+*.map
 *.tmp.*
 log.txt
 *.sublime-project
 *.sublime-workspace
 .vscode/
 npm-debug.log*
+.history
 
 .idea/
 .sass-cache/
@@ -28,6 +31,8 @@ plugins/android.json
 plugins/ios.json
 www/
 $RECYCLE.BIN/
+android/
+.sourcemaps/
 
 .DS_Store
 Thumbs.db
