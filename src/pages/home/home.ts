@@ -8,8 +8,9 @@ import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
   templateUrl: "home.html"
 })
 export class HomePage {
-  username: string = "";
-  email: string = "";
+  checkin: boolean = true;
+  loading: boolean = false;
+  sucess: boolean = null;
 
   constructor(private nav: NavController, private auth: AuthServiceProvider) {
     this.auth.getUserInfo()
@@ -17,14 +18,21 @@ export class HomePage {
         const info = userInfo
         console.log('info', info)
       });
-
-    // this.username = info["name"];
-    // this.email = info["email"];
   }
 
   public logout() {
     this.auth.logout().subscribe(succ => {
       this.nav.setRoot("LoginPage");
     });
+  }
+
+  public userCheckInOut() {
+    this.loading = true
+
+    setTimeout( () => {
+      this.sucess = true
+      this.loading = false
+      this.checkin = false
+    }, 4000);
   }
 }
