@@ -8,6 +8,7 @@ import { IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { CheckServiceProvider } from '../providers/check-service/check-service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthServiceProvider
+    AuthServiceProvider,
+    CheckServiceProvider
   ]
 })
 
