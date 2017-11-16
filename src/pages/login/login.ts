@@ -40,7 +40,7 @@ export class LoginPage {
         } else {
           const parser = new DOMParser();
           const htmlError = parser.parseFromString(res, 'text/html');
-          const preError = htmlError.getElementsByTagName('pre')[0].innerHTML;
+          const preError = htmlError.getElementsByTagName('pre')[0] ? htmlError.getElementsByTagName('pre')[0].innerHTML : '';
 
           if (preError.includes('ECONNREFUSED')) {
             this.showError('Não foi possível conectar com o servidor da API!');
