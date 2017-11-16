@@ -29,7 +29,6 @@ export class LoginPage {
   ) {
     this.auth.getUserInfo()
       .then((userDecoded) => {
-        console.log('user', userDecoded)
         if (userDecoded.userId) {
           this.nav.setRoot("HomePage");
         }

@@ -60,7 +60,6 @@ export class AuthServiceProvider {
       return Observable.throw('Preencha os campos para continuar');
     } else {
       return Observable.create(observer => {
-
         const body = {
           email,
           password

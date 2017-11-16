@@ -1,6 +1,12 @@
 import { Component } from "@angular/core";
-import { NavController, IonicPage } from "ionic-angular";
+import {
+  NavController,
+  AlertController,
+  IonicPage
+} from "ionic-angular";
+
 import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
+import { CheckServiceProvider } from "../../providers/check-service/check-service";
 
 @IonicPage()
 @Component({
@@ -10,15 +16,14 @@ import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
 export class HomePage {
   checkin: boolean = true;
   loading: boolean = false;
-  sucess: boolean = null;
+  sucess: boolean = false;
 
-  constructor(private nav: NavController, private auth: AuthServiceProvider) {
-    this.auth.getUserInfo()
-      .then((userInfo) => {
-        const info = userInfo
-        console.log('info', info)
-      });
-  }
+  constructor(
+    private nav: NavController,
+    private auth: AuthServiceProvider,
+    private alertCtrl: AlertController,
+    private check: CheckServiceProvider
+  ) {}
 
   public logout() {
     this.auth.logout().subscribe(succ => {
@@ -27,12 +32,55 @@ export class HomePage {
   }
 
   public userCheckInOut() {
-    this.loading = true
+    this.loading = true;
 
-    setTimeout( () => {
-      this.sucess = true
-      this.loading = false
-      this.checkin = false
+    this.auth.getUserInfo()
+      .then((userDecoded) => {
+        const userInfo = userDecoded;
+        const checkUser = {
+          inOut: this.checkin ? 'in' : 'out',
+          userId: userInfo.userId
+        };
+
+        this.check.checkUser(checkUser).subscribe(
+          res => {
+            if (!res.checked) {
+              const parser = new DOMParser();
+              const htmlError = parser.parseFromString(res, 'text/html');
+              const preError = htmlError.getElementsByTagName('pre')[0] ? htmlError.getElementsByTagName('pre')[0].innerHTML : '';
+
+              if (preError.includes('ECONNREFUSED')) {
+                this.showError('Não foi possível conectar com o servidor da API!');
+              } else {
+                this.showError(res);
+              }
+            }
+          },
+          err => {
+            this.showError(err);
+          }
+        );
+      });
+
+    setTimeout(() => {
+      this.loading = false;
+      this.sucess = true;
     }, 4000);
+
+    setTimeout(() => {
+      this.checkin = false;
+    }, 1000);
+  }
+
+  showError(text) {
+    this.loading = false;
+
+    let alert = this.alertCtrl.create({
+      title: "Erro",
+      subTitle: text,
+      buttons: ["OK"]
+    });
+
+    alert.present(prompt);
   }
 }
