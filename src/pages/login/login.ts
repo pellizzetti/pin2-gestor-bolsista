@@ -37,10 +37,18 @@ export class LoginPage {
           this.nav.setRoot("HomePage");
         } else if (res.msg) {
           this.showError(res.msg);
+        } else {
+          const parser = new DOMParser();
+          const htmlError = parser.parseFromString(res, 'text/html');
+          const preError = htmlError.getElementsByTagName('pre')[0].innerHTML;
+
+          if (preError.includes('ECONNREFUSED')) {
+            this.showError('Não foi possível conectar com o servidor da API!');
+          }
         }
       },
-      error => {
-        this.showError(error);
+      err => {
+        this.showError(err);
       }
     );
   }

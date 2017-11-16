@@ -65,7 +65,6 @@ export class AuthServiceProvider {
           .post<Response>(`${API_URL}/login`, body)
           .subscribe(
             res => {
-              console.log(res)
               this.storage.set('jwt', res.jwt)
                 .then(() => {
                   observer.next(res);
