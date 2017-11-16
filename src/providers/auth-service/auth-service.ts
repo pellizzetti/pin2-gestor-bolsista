@@ -48,18 +48,16 @@ export class AuthServiceProvider {
     return JSON.parse(decoded);
   }
 
-  public login(credentials) {
-    if (credentials.email === null || credentials.password === null) {
+  public login({ email, password }) {
+    if (email === null || password === null) {
       return Observable.throw('Preencha os campos para continuar');
     } else {
       return Observable.create(observer => {
 
         const body = {
-          email: credentials.email,
-          password: credentials.password
+          email,
+          password
         };
-
-        let access = false
 
         this.http
           .post<Response>(`${API_URL}/login`, body)

@@ -6,6 +6,7 @@ import {
   Loading,
   IonicPage
 } from "ionic-angular";
+
 import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
 
 @IonicPage()
