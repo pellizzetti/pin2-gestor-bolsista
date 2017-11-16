@@ -14,37 +14,44 @@ interface Response {
 
 @Injectable()
 export class AuthServiceProvider {
-
   constructor(private http: HttpClient, private storage: Storage) {}
 
   private urlBase64Decode(str: string) {
     let output = str.replace(/-/g, '+').replace(/_/g, '/');
+
     switch (output.length % 4) {
-        case 0:
-            break;
-        case 2:
-            output += '==';
-            break;
-        case 3:
-            output += '=';
-            break;
-        default:
-            throw 'String base64url inválida!';
+      case 0:
+        break;
+      case 2:
+        output += '==';
+        break;
+      case 3:
+        output += '=';
+        break;
+      default:
+        throw 'String base64url inválida!';
     }
+
     return decodeURIComponent((<any>window).escape(window.atob(output)));
   }
 
   private decodeToken(token: string = '') {
-    if (token === null || token === '') { return { 'upn': '' }; }
-    const parts = token.split('.');
-    if (parts.length !== 3) {
+    if (token === null || token === '') {
+      return { 'upn': '' };
+    }
 
-        throw new Error('JWT deve ter 3 partes');
+    const parts = token.split('.');
+
+    if (parts.length !== 3) {
+      throw new Error('JWT deve ter 3 partes');
     }
+
     const decoded = this.urlBase64Decode(parts[1]);
+
     if (!decoded) {
-        throw new Error('Não foi possível analisar o JWT');
+      throw new Error('Não foi possível analisar o JWT');
     }
+
     return JSON.parse(decoded);
   }
 
