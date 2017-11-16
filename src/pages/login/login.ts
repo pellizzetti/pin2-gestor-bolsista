@@ -16,17 +16,24 @@ import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
 })
 export class LoginPage {
   loading: Loading;
-  registerCredentials = { email: "", password: "" };
+  registerCredentials = {
+    email: '',
+    password: ''
+  };
 
   constructor(
     private nav: NavController,
     private auth: AuthServiceProvider,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController
-  ) {}
-
-  public createAccount() {
-    this.nav.push("RegisterPage");
+  ) {
+    this.auth.getUserInfo()
+      .then((userDecoded) => {
+        console.log('user', userDecoded)
+        if (userDecoded.userId) {
+          this.nav.setRoot("HomePage");
+        }
+      })
   }
 
   public login() {
