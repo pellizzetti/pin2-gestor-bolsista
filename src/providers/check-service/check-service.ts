@@ -40,13 +40,4 @@ export class CheckServiceProvider {
         );
     });
   }
-
-  public getUserCheckInfo() {
-    return this.storage.get('jwt')
-      .then((token) => {
-        const decoded = this.decodeToken(token);
-
-        return decoded.context.user;
-      });
-  }
 }

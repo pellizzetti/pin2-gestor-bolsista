@@ -104,8 +104,9 @@ export class AuthServiceProvider {
       .then((token) => {
         const decoded = this.decodeToken(token);
 
-        return decoded.context.user;
-      });
+        return decoded.context ? decoded.context.user : null;
+      })
+      .catch(err => console.log(err));
   }
 
   public logout() {

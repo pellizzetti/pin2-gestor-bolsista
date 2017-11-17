@@ -29,7 +29,7 @@ export class LoginPage {
   ) {
     this.auth.getUserInfo()
       .then((userDecoded) => {
-        if (userDecoded.userId) {
+        if (userDecoded && userDecoded.userId) {
           this.nav.setRoot("HomePage");
         }
       })
