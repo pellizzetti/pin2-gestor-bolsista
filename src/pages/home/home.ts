@@ -48,7 +48,7 @@ export class HomePage {
               if (preError.includes('ECONNREFUSED')) {
                 this.showError('Não foi possível conectar com o servidor da API!');
               } else {
-                this.showError(res);
+                this.showError(res.msg);
               }
             }
           },
