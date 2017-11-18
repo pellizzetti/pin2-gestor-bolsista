@@ -66,7 +66,7 @@ export class AuthServiceProvider {
         };
 
         this.http
-          .post<Response>(`${API_URL}/login`, body)
+          .post<Response>(`${API_URL}/user/login`, body)
           .subscribe(
             res => {
               this.storage.set('jwt', res.jwt)
