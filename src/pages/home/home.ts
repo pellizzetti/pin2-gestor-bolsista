@@ -37,12 +37,8 @@ export class HomePage {
     this.auth.getUserInfo()
       .then((userDecoded) => {
         const userInfo = userDecoded;
-        const checkUser = {
-          inOut: this.checkin ? 'in' : 'out',
-          userId: userInfo.userId
-        };
 
-        this.check.checkUser(checkUser).subscribe(
+        this.check.checkUser(userInfo.userId).subscribe(
           res => {
             if (!res.checked) {
               const parser = new DOMParser();
