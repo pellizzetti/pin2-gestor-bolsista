@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import "rxjs/add/operator/map";
 
@@ -75,12 +75,18 @@ export class AuthServiceProvider {
                   observer.complete();
                 });
             },
-            err => {
-              if (err.error) {
-                observer.next(err.error);
+            (err: HttpErrorResponse) => {
+              if (err.error instanceof Error) {
+                observer.next(err.error.message);
+                observer.complete();
+              } else if (err.status === 0) {
+                const apiErr = { status: 0, message: 'Não foi possível conectar com o servidor da API!' }
+
+                observer.next(apiErr);
                 observer.complete();
               } else {
-                console.log('Ocorreu um erro', err);
+                observer.next(`Erro na API:\nStatus:${err.status}\nBody: ${err.error}`);
+                observer.complete();
               }
             }
           );

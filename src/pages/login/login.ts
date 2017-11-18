@@ -44,8 +44,10 @@ export class LoginPage {
           this.nav.setRoot("HomePage");
         } else if (res.msg) {
           this.showError(res.msg);
-        } else if (res.error.message) {
+        } else if (res.error && res.error.message) {
           this.showError(`Erro na API: ${res.error.message}`);
+        } else if (res.status === 0) {
+          this.showError(res.message);
         } else {
           const parser = new DOMParser();
           const htmlError = parser.parseFromString(res, 'text/html');
