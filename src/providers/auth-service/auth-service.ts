@@ -79,13 +79,16 @@ export class AuthServiceProvider {
               if (err.error instanceof Error) {
                 observer.next(err.error.message);
                 observer.complete();
-              } else if (err.status === 0) {
-                const apiErr = { status: 0, message: 'Não foi possível conectar com o servidor da API!' }
+              } else if (err.status) {
+                const msgErr = err.status === 0 ?
+                  'Não foi possível conectar com o servidor da API!' :
+                  err.error
+                const apiErr = {
+                  status: err.status,
+                  message: msgErr
+                }
 
                 observer.next(apiErr);
-                observer.complete();
-              } else {
-                observer.next(`Erro na API:\nStatus:${err.status}\nBody: ${err.error}`);
                 observer.complete();
               }
             }
