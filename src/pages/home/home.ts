@@ -17,13 +17,19 @@ export class HomePage {
   checkin: boolean = true;
   loading: boolean = false;
   sucess: boolean = false;
+  user: any;
 
   constructor(
     private nav: NavController,
     private auth: AuthServiceProvider,
     private alertCtrl: AlertController,
     private check: CheckServiceProvider
-  ) {}
+  ) {
+    this.auth.getUserInfo()
+      .then((userDecoded) => {
+        this.user = userDecoded;
+      });
+  }
 
   public logout() {
     this.auth.logout().subscribe(succ => {
@@ -34,29 +40,24 @@ export class HomePage {
   public userCheckInOut() {
     this.loading = true;
 
-    this.auth.getUserInfo()
-      .then((userDecoded) => {
-        const userInfo = userDecoded;
+    this.check.checkUser(this.user.userId).subscribe(
+      res => {
+        if (!res.checked) {
+          const parser = new DOMParser();
+          const htmlError = parser.parseFromString(res, 'text/html');
+          const preError = htmlError.getElementsByTagName('pre')[0] ? htmlError.getElementsByTagName('pre')[0].innerHTML : '';
 
-        this.check.checkUser(userInfo.userId).subscribe(
-          res => {
-            if (!res.checked) {
-              const parser = new DOMParser();
-              const htmlError = parser.parseFromString(res, 'text/html');
-              const preError = htmlError.getElementsByTagName('pre')[0] ? htmlError.getElementsByTagName('pre')[0].innerHTML : '';
-
-              if (preError.includes('ECONNREFUSED')) {
-                this.showError('Não foi possível conectar com o servidor da API!');
-              } else {
-                this.showError(res.msg);
-              }
-            }
-          },
-          err => {
-            this.showError(err);
+          if (preError.includes('ECONNREFUSED')) {
+            this.showError('Não foi possível conectar com o servidor da API!');
+          } else {
+            this.showError(res.msg);
           }
-        );
-      });
+        }
+      },
+      err => {
+        this.showError(err);
+      }
+    );
 
     setTimeout(() => {
       this.loading = false;
@@ -68,7 +69,7 @@ export class HomePage {
     }, 1000);
   }
 
-  showError(text) {
+  private showError(text) {
     this.loading = false;
 
     let alert = this.alertCtrl.create({
@@ -78,5 +79,9 @@ export class HomePage {
     });
 
     alert.present(prompt);
+  }
+
+  private getUserCheckInOutList() {
+
   }
 }

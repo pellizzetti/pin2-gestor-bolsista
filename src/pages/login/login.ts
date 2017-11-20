@@ -65,7 +65,7 @@ export class LoginPage {
     );
   }
 
-  showLoading() {
+  private showLoading() {
     this.loading = this.loadingCtrl.create({
       content: "Aguarde...",
       dismissOnPageChange: true
@@ -74,7 +74,7 @@ export class LoginPage {
     this.loading.present();
   }
 
-  showError(text) {
+  private showError(text) {
     this.loading.dismiss();
 
     let alert = this.alertCtrl.create({
