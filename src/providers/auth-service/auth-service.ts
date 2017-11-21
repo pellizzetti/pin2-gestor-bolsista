@@ -109,14 +109,15 @@ export class AuthServiceProvider {
     }
   }
 
-  public getUserInfo() {
-    return this.storage.get('jwt')
-      .then((token) => {
-        const decoded = this.decodeToken(token);
+  public async getUserInfo() {
+    try {
+      const token = await this.storage.get('jwt');
+      const decoded = this.decodeToken(token);
 
-        return decoded.context ? decoded.context.user : null;
-      })
-      .catch(err => console.log(err));
+      return decoded.context ? decoded.context.user : null;
+    } catch (err) {
+      throw err;
+    }
   }
 
   public logout() {
