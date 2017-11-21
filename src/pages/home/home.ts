@@ -3,7 +3,9 @@ import { DatePipe } from "@angular/common"
 import {
   NavController,
   AlertController,
-  IonicPage
+  IonicPage,
+  Loading,
+  LoadingController
 } from "ionic-angular";
 
 import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
@@ -17,6 +19,7 @@ import { CheckServiceProvider } from "../../providers/check-service/check-servic
 export class HomePage {
   checkin: boolean;
   loading: boolean = false;
+  loadingData: Loading;
   sucess: boolean = false;
   user: any;
   listCheckInOut: any;
@@ -25,8 +28,10 @@ export class HomePage {
     private nav: NavController,
     private auth: AuthServiceProvider,
     private alertCtrl: AlertController,
-    private check: CheckServiceProvider
+    private check: CheckServiceProvider,
+    private loadingCtrl: LoadingController
   ) {
+    this.showLoading();
     this.auth.getUserInfo()
       .then((userDecoded) => {
         this.user = userDecoded;
@@ -38,15 +43,21 @@ export class HomePage {
               const htmlError = parser.parseFromString(res, 'text/html');
               const preError = htmlError.getElementsByTagName('pre')[0] ? htmlError.getElementsByTagName('pre')[0].innerHTML : '';
 
+              this.listCheckInOut = []
               if (preError.includes('ECONNREFUSED')) {
                 this.showError('Não foi possível conectar com o servidor da API!');
               } else {
                 this.showError(res.msg);
               }
             } else {
-              this.checkin = res.checkInOutList[res.checkInOutList.length - 1].in_out === 'in' ? false : true;
+              if (res.checkInOutList && res.checkInOutList.length > 0) {
+                this.checkin = res.checkInOutList[res.checkInOutList.length - 1].in_out === 'in' ? false : true;
+              } else {
+                this.checkin = true;
+              }
 
-              this.listCheckInOut = res.checkInOutList;
+              this.listCheckInOut = res.checkInOutList || [];
+              this.loadingData.dismiss();
             }
           },
           err => {
@@ -62,6 +73,15 @@ export class HomePage {
     });
   }
 
+  private showLoading() {
+    this.loadingData = this.loadingCtrl.create({
+      content: 'Buscando dados da API...',
+      dismissOnPageChange: true
+    });
+
+    this.loadingData.present();
+  }
+
   public userCheckInOut() {
     this.loading = true;
 
@@ -72,13 +92,17 @@ export class HomePage {
           const htmlError = parser.parseFromString(res, 'text/html');
           const preError = htmlError.getElementsByTagName('pre')[0] ? htmlError.getElementsByTagName('pre')[0].innerHTML : '';
 
+          this.loading = false;
+
           if (preError.includes('ECONNREFUSED')) {
             this.showError('Não foi possível conectar com o servidor da API!');
           } else {
             this.showError(res.msg);
           }
         } else {
+          this.sucess = true;
           this.checkin = !this.checkin
+          this.loading = false;
           this.listCheckInOut.push(res.checkInOut)
         }
       },
@@ -86,19 +110,11 @@ export class HomePage {
         this.showError(err);
       }
     );
-
-    setTimeout(() => {
-      this.loading = false;
-      this.sucess = true;
-    }, 4000);
-
-    setTimeout(() => {
-      this.checkin = false;
-    }, 1000);
   }
 
   private showError(text) {
     this.loading = false;
+    this.loadingData.dismiss;
 
     let alert = this.alertCtrl.create({
       title: "Erro",
@@ -109,7 +125,6 @@ export class HomePage {
     alert.present(prompt);
   }
 
-  private getUserCheckInOutList() {
-
+  private async getUserCheckInOutList() {
   }
 }
