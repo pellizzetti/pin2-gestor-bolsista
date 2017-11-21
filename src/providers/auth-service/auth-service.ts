@@ -80,6 +80,7 @@ export class AuthServiceProvider {
                 observer.next(err.error.message);
                 observer.complete();
               } else if (err.status) {
+                console.log(err)
                 const msgErr = err.status === 0 ?
                   'Não foi possível conectar com o servidor da API!' :
                   err.error

@@ -5,22 +5,30 @@ import "rxjs/add/operator/map";
 
 import { API_URL } from '../../app/constants';
 
-interface Response {
-  checked: boolean;
-  msg: string;
-  checkInOut: string;
-}
-
 @Injectable()
 export class CheckServiceProvider {
   constructor(private http: HttpClient) {}
 
-  public checkUser({ inOut, userId }) {
+  public checkUser(userId) {
     return Observable.create(observer => {
-      const body = {
-        inOut,
-        userId
-      };
+      this.http
+        .post(`${API_URL}/checkinout/${userId}`, {})
+        .subscribe(
+          res => {
+            observer.next(res);
+            observer.complete();
+          },
+          err => {
+            if (err.error) {
+              observer.next(err.error);
+              observer.complete();
+            } else {
+              console.log('Ocorreu um erro', err);
+            }
+          }
+        );
+    });
+  }
 
       this.http
         .post<Response>(`${API_URL}/checkinout`, body)
