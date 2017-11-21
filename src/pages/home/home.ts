@@ -14,10 +14,11 @@ import { CheckServiceProvider } from "../../providers/check-service/check-servic
   templateUrl: "home.html"
 })
 export class HomePage {
-  checkin: boolean = true;
+  checkin: boolean;
   loading: boolean = false;
   sucess: boolean = false;
   user: any;
+  listCheckInOut: any;
 
   constructor(
     private nav: NavController,
@@ -75,6 +76,7 @@ export class HomePage {
           } else {
             this.showError(res.msg);
           }
+        } else {
           this.checkin = !this.checkin
           this.listCheckInOut.push(res.checkInOut)
         }
