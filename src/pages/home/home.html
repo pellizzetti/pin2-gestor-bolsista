@@ -31,6 +31,9 @@
       </ion-col>
       <ion-col col-12 col-md-9>
         <ion-list>
+          <ion-item-divider sticky>
+            <h1>Check-in/out</h1>
+          </ion-item-divider>
           <ion-item item-start *ngFor="let check of listCheckInOut">
             <h2>Check-{{ check.in_out }}</h2>
             <p>Hora: {{ check.created_at.date | date: 'HH:mm' }}</p>
