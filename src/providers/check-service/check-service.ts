@@ -30,8 +30,10 @@ export class CheckServiceProvider {
     });
   }
 
+  public getCheckInOutUser(userId) {
+    return Observable.create(observer => {
       this.http
-        .post<Response>(`${API_URL}/checkinout`, body)
+        .get(`${API_URL}/checkinout/list/${userId}`, {})
         .subscribe(
           res => {
             observer.next(res);
