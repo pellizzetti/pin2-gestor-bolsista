@@ -3,14 +3,13 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
-
 @Component({
   templateUrl: 'app.html'
 })
 
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+
   rootPage: any = 'LoginPage';
   pages: Array<{title: string, component: any}>
 
@@ -21,7 +20,8 @@ export class MyApp {
     public splashScreen: SplashScreen
   ) {
     this.pages = [
-      { title: 'Início', component: HomePage }
+      { title: 'Início', component: 'HomePage' },
+      { title: 'Usuários', component: 'UserPage' }
     ];
 
     platform.ready().then(() => {
