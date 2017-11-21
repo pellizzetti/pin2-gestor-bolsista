@@ -75,6 +75,8 @@ export class HomePage {
           } else {
             this.showError(res.msg);
           }
+          this.checkin = !this.checkin
+          this.listCheckInOut.push(res.checkInOut)
         }
       },
       err => {
