@@ -28,6 +28,29 @@ export class HomePage {
     this.auth.getUserInfo()
       .then((userDecoded) => {
         this.user = userDecoded;
+
+        this.check.getCheckInOutUser(this.user.userId).subscribe(
+          res => {
+            if (!res.success) {
+              const parser = new DOMParser();
+              const htmlError = parser.parseFromString(res, 'text/html');
+              const preError = htmlError.getElementsByTagName('pre')[0] ? htmlError.getElementsByTagName('pre')[0].innerHTML : '';
+
+              if (preError.includes('ECONNREFUSED')) {
+                this.showError('Não foi possível conectar com o servidor da API!');
+              } else {
+                this.showError(res.msg);
+              }
+            } else {
+              this.checkin = res.checkInOutList[res.checkInOutList.length - 1].in_out === 'in' ? false : true;
+
+              this.listCheckInOut = res.checkInOutList;
+            }
+          },
+          err => {
+            this.showError(err);
+          }
+        );
       });
   }
 
