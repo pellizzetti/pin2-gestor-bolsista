@@ -32,40 +32,7 @@ export class HomePage {
     private check: CheckServiceProvider,
     private loadingCtrl: LoadingController
   ) {
-    this.showLoading();
-    this.auth.getUserInfo()
-      .then((userDecoded) => {
-        this.user = userDecoded;
-
-        this.check.getCheckInOutUser(this.user.userId).subscribe(
-          res => {
-            if (!res.success) {
-              const parser = new DOMParser();
-              const htmlError = parser.parseFromString(res, 'text/html');
-              const preError = htmlError.getElementsByTagName('pre')[0] ? htmlError.getElementsByTagName('pre')[0].innerHTML : '';
-
-              this.listCheckInOut = []
-              if (preError.includes('ECONNREFUSED')) {
-                this.showError('Não foi possível conectar com o servidor da API!');
-              } else {
-                this.showError(res.msg);
-              }
-            } else {
-              if (res.checkInOutList && res.checkInOutList.length > 0) {
-                this.checkin = res.checkInOutList[res.checkInOutList.length - 1].in_out === 'in' ? false : true;
-              } else {
-                this.checkin = true;
-              }
-
-              this.listCheckInOut = res.checkInOutList || [];
-              this.loadingData.dismiss();
-            }
-          },
-          err => {
-            this.showError(err);
-          }
-        );
-      });
+    this.getUserCheckInOutList();
   }
 
   public logout() {
@@ -128,6 +95,43 @@ export class HomePage {
   }
 
   private async getUserCheckInOutList() {
+    try {
+      this.showLoading();
+      this.user = await this.auth.getUserInfo()
+
+      this.check.getCheckInOutUser(this.user.userId).subscribe(
+          res => {
+            if (!res.success) {
+              const parser = new DOMParser();
+              const htmlError = parser.parseFromString(res, 'text/html');
+              const preError = htmlError.getElementsByTagName('pre')[0] ? htmlError.getElementsByTagName('pre')[0].innerHTML : '';
+
+              this.listCheckInOut = [];
+              if (preError.includes('ECONNREFUSED')) {
+                this.showError('Não foi possível conectar com o servidor da API!');
+              } else {
+                this.showError(res.msg);
+              }
+            } else {
+              if (res.checkInOutList && res.checkInOutList.length > 0) {
+                this.checkin = res.checkInOutList[res.checkInOutList.length - 1].in_out === 'in' ? false : true;
+              } else {
+                this.checkin = true;
+              }
+
+              this.listCheckInOut = res.checkInOutList || [];
+              if (this.listCheckInOut.length === 0) {
                 this.emptyList = true;
+              }
+              this.loadingData.dismiss();
+            }
+          },
+          err => {
+            this.showError(err);
+          }
+      );
+    } catch (err) {
+      this.showError(err);
+    }
   }
 }
