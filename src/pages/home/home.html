@@ -38,6 +38,9 @@
             <h2>Check-{{ check.in_out }}</h2>
             <p>Hora: {{ check.created_at.date | date: 'HH:mm' }}</p>
           </ion-item>
+          <ion-item item-start *ngIf="emptyList">
+            <h3><i>Nenhum check-in/out realizado hoje</i></h3>
+          </ion-item>
         </ion-list>
       </ion-col>
     </ion-row>

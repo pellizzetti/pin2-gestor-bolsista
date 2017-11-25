@@ -17,12 +17,13 @@ import { CheckServiceProvider } from "../../providers/check-service/check-servic
   templateUrl: "home.html"
 })
 export class HomePage {
-  checkin: boolean;
+  checkin: boolean = true;
   loading: boolean = false;
   loadingData: Loading;
   sucess: boolean = false;
   user: any;
-  listCheckInOut: any;
+  listCheckInOut: any = [];
+  emptyList: boolean = false;
 
   constructor(
     private nav: NavController,
@@ -103,6 +104,7 @@ export class HomePage {
           this.sucess = true;
           this.checkin = !this.checkin
           this.loading = false;
+          this.emptyList = false;
           this.listCheckInOut.push(res.checkInOut)
         }
       },
@@ -126,5 +128,6 @@ export class HomePage {
   }
 
   private async getUserCheckInOutList() {
+                this.emptyList = true;
   }
 }
