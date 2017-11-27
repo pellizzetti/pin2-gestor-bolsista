@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar color="dark">
+
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>Usuários</ion-title>
+
+    <ion-buttons end>
+      <button ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="user" padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>     
+        <form [formGroup]="user" (ngSubmit)="saveUser()">
+          <ion-item-divider sticky>
+              <h1>Cadastrar usuário</h1>
+            </ion-item-divider>
+          <ion-item>
+            <ion-label>Nome</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>E-mail</ion-label>
+            <ion-input type="email" formControlName="email"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Senha</ion-label>
+            <ion-input type="text" formControlName="password"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Nível</ion-label>
+            <ion-select formControlName="level" interface="popover">
+              <ion-option value="bolsista">Bolsista</ion-option>
+              <ion-option value="orientador">Orientador</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-buttons end>
+            <button ion-button block type="submit" [disabled]="!user.valid">Salvar</button>
+          </ion-buttons>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
