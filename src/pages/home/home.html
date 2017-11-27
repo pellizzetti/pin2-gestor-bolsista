@@ -19,10 +19,16 @@
 </ion-header>
 
 <ion-content class="home" padding>
-  <ion-grid>
-    <ion-row>
+  <ion-grid [ngSwitch]="user.userLevel">
+    <ion-row *ngSwitchCase="'bolsista'">
+      <ion-col col-12>
+        <button ion-button outline item-start full icon-left (click)="navigateToAttendance()">
+          <ion-icon name="paper"></ion-icon>
+          Cadastrar atendimento
+        </button>
+      </ion-col>
       <ion-col col-12 col-md-3 text-center>
-        <button (click)='userCheckInOut()' class="checkinout" [ngClass]="{ 'is-loading': loading, 'is-sucess': sucess  }">
+        <button (click)="userCheckInOut()" class="checkinout" [ngClass]="{ 'is-loading': loading, 'is-sucess': sucess  }">
           <svg viewBox="0 0 90.594 59.714">
             <polyline class="check" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-miterlimit="10" points="1.768,23.532 34.415,56.179 88.826,1.768"/>
           </svg>
@@ -42,6 +48,16 @@
             <h3><i>Nenhum check-in/out realizado hoje</i></h3>
           </ion-item>
         </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngSwitchCase="'gestor'">
+      <ion-col col-12 text-center>
+        Gestor
+      </ion-col>
+    </ion-row>
+    <ion-row *ngSwitchDefault>
+      <ion-col col-12 text-center>
+        Carregando...
       </ion-col>
     </ion-row>
   </ion-grid>
