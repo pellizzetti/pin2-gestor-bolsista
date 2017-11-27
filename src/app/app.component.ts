@@ -20,10 +20,11 @@ export class MyApp {
     public menuCtrl: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public auth: AuthServiceProvider
+    public authService: AuthServiceProvider
   ) {
     this.pages = [
       { title: 'Início', component: 'HomePage' },
+      { title: 'Atendimentos', component: 'AttendanceListPage' },
       { title: 'Usuários', component: 'UserListPage' }
     ];
 
@@ -39,7 +40,7 @@ export class MyApp {
   }
 
   public logout() {
-    this.auth.logout().subscribe(succ => {
+    this.authService.logout().subscribe(succ => {
       this.nav.setRoot("LoginPage");
     });
   }
