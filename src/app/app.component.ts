@@ -3,6 +3,8 @@ import { Platform, MenuController, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -15,13 +17,14 @@ export class MyApp {
 
   constructor(
     public platform: Platform,
-    public menu: MenuController,
+    public menuCtrl: MenuController,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen
+    public splashScreen: SplashScreen,
+    public auth: AuthServiceProvider
   ) {
     this.pages = [
       { title: 'Início', component: 'HomePage' },
-      { title: 'Usuários', component: 'UserPage' }
+      { title: 'Usuários', component: 'UserListPage' }
     ];
 
     platform.ready().then(() => {
@@ -30,9 +33,15 @@ export class MyApp {
     });
   }
 
-  openPage(page) {
-    this.menu.close();
+  public openPage(page) {
+    this.menuCtrl.close();
     this.nav.setRoot(page.component);
+  }
+
+  public logout() {
+    this.auth.logout().subscribe(succ => {
+      this.nav.setRoot("LoginPage");
+    });
   }
 }
 
