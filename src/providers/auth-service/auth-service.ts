@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import "rxjs/add/operator/map";
 
 import { API_URL } from '../../app/constants';
 
-interface Response {
+export interface Response {
   auth: boolean;
-  msg: string;
+  message: string;
   jwt: string;
 }
 
@@ -59,53 +59,23 @@ export class AuthServiceProvider {
     if (email === null || password === null) {
       return Observable.throw('Preencha os campos para continuar');
     } else {
-      return Observable.create(observer => {
-        const body = {
-          email,
-          password
-        };
+      const body = {
+        email,
+        password
+      };
+      
+      return this.http.post<Response>(`${API_URL}/user/login`, body)
+        .map((res) => {
+          if (res && res.jwt) {
+            this.storage.set('jwt', res.jwt);
+          }
 
-        this.http
-          .post<Response>(`${API_URL}/user/login`, body)
-          .subscribe(
-            res => {
-              this.storage.set('jwt', res.jwt)
-                .then(() => {
-                  observer.next(res);
-                  observer.complete();
-                });
-            },
-            (err: HttpErrorResponse) => {
-              if (err.error instanceof Error) {
-                observer.next(err.error.message);
-                observer.complete();
-              } else if (err.status) {
-                console.log(err)
-                const msgErr = err.status === 0 ?
-                  'Não foi possível conectar com o servidor da API!' :
-                  err.error
-                const apiErr = {
-                  status: err.status,
-                  message: msgErr
-                }
-
-                observer.next(apiErr);
-                observer.complete();
-              }
-            }
-          );
-      });
-    }
-  }
-
-  public register(credentials) {
-    if (credentials.email === null || credentials.password === null) {
-      return Observable.throw('Preencha os campos para continuar');
-    } else {
-      return Observable.create(observer => {
-        observer.next(true);
-        observer.complete();
-      });
+          if (res.message) {
+            return res;
+          }
+            
+          return res;
+        });
     }
   }
 

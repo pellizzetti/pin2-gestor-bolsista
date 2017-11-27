@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import {
   NavController,
   AlertController,
@@ -7,14 +7,14 @@ import {
   IonicPage
 } from "ionic-angular";
 
-import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
+import { AuthServiceProvider, Response } from "../../providers/auth-service/auth-service";
 
 @IonicPage()
 @Component({
   selector: "page-login",
   templateUrl: "login.html"
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
   loading: Loading;
   registerCredentials = {
     email: '',
@@ -23,44 +23,37 @@ export class LoginPage {
 
   constructor(
     private nav: NavController,
-    private auth: AuthServiceProvider,
+    private authService: AuthServiceProvider,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController
-  ) {
-    this.auth.getUserInfo()
-      .then((userDecoded) => {
-        if (userDecoded && userDecoded.userId) {
-          this.nav.setRoot("HomePage");
-        }
-      })
+  ) {}
+
+  async ngOnInit() {
+    const userDecoded = await this.authService.getUserInfo();
+    if (userDecoded) {
+      this.nav.setRoot('HomePage');
+    }
   }
 
-  public login() {
+  private login() {
     this.showLoading();
 
-    this.auth.login(this.registerCredentials).subscribe(
-      res => {
+    this.authService.login(this.registerCredentials).subscribe(
+      (res: Response) => {
         if (res.auth) {
-          this.nav.setRoot("HomePage");
-        } else if (res.msg) {
-          this.showError(res.msg);
-        } else if (res.error && res.error.message) {
-          this.showError(`Erro na API: ${res.error.message}`);
-        } else if (res.status) {
+          this.nav.setRoot('HomePage');
+        } else if (res.message) {
           this.showError(res.message);
-          console.log(res.message)
         } else {
-          const parser = new DOMParser();
-          const htmlError = parser.parseFromString(res, 'text/html');
-          const preError = htmlError.getElementsByTagName('pre')[0] ? htmlError.getElementsByTagName('pre')[0].innerHTML : '';
-
-          if (preError.includes('ECONNREFUSED')) {
-            this.showError('Não foi possível conectar com o servidor da API!');
-          }
+          this.showError('Não foi possível conectar com o servidor da API!');
         }
       },
       err => {
-        this.showError(err);
+        if (err.error) {
+          this.showError(err.error.message);
+        } else {
+          this.showError(err.message);
+        }
       }
     );
   }
