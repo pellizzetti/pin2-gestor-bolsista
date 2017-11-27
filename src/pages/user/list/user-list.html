@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-navbar color="dark">
+
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>Usuários</ion-title>
+
+    <ion-buttons end>
+      <button ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="user-list" padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <ion-list>
+          <ion-item-divider sticky>
+            <h1>Lista de usuários</h1>
+          </ion-item-divider>
+          <ion-item item-start *ngFor="let user of listUsers">
+            <h2>{{ user.name }}</h2>
+          </ion-item>
+          <ion-item item-start *ngIf="emptyList">
+            <h3><i>Nenhum usuário cadastrado</i></h3>
+          </ion-item>
+          <ion-item>
+            <button ion-button outline item-start icon-left (click)="navigateToUser()">
+              <ion-icon name="person"></ion-icon>
+              Cadastrar usuário
+            </button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
