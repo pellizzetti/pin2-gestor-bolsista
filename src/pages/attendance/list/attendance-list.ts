@@ -9,7 +9,7 @@ import {
 } from "ionic-angular";
 
 import { AuthServiceProvider } from "../../../providers/auth-service/auth-service";
-import { UserServiceProvider } from "../../../providers/user-service/user-service";
+import { AttendanceServiceProvider } from "../../../providers/attendance-service/attendance-service";
 
 @IonicPage()
 @Component({
@@ -18,39 +18,40 @@ import { UserServiceProvider } from "../../../providers/user-service/user-servic
 })
 export class AttendanceListPage implements OnInit {
   loadingData: Loading;
-  listUsers: any = [];
+  listAttendances: any = [];
   emptyList: boolean = false;
+  user: any;
 
   constructor(
     private nav: NavController,
     private authService: AuthServiceProvider,
-    private userService: UserServiceProvider,
+    private attendanceService: AttendanceServiceProvider,
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController
   ) {}
 
   async ngOnInit() {
-    const userDecoded = await this.authService.getUserInfo()
+    const userDecoded = await this.authService.getUserInfo();
     if (!userDecoded || userDecoded === null) {
       this.nav.setRoot('LoginPage');
-    } else if (userDecoded.userLevel === 'bolsista') {
-      this.nav.setRoot('HomePage');
-    }
-    
-    await this.getUserList();
+    } 
+        
+    await this.getAttendanceList(userDecoded.userId);
   }
 
-  private async getUserList() {
+  private async getAttendanceList(userId) {
     this.showLoading();
 
-    this.userService.getUserList().subscribe(
+    this.attendanceService.getAttendanceList().subscribe(
         res => {
           if (res.success) {
-            this.listUsers = res.usersList || [];
+            this.listAttendances = res.attendanceList || [];
 
-            if (this.listUsers.length === 0) {
+            if (this.listAttendances.length === 0) {
               this.emptyList = true;
             }
+
+            this.listAttendances.filter(item => item.user_id === userId);
 
             this.loadingData.dismiss();
           } else if (res.message) {
@@ -60,13 +61,17 @@ export class AttendanceListPage implements OnInit {
           }
         },
         err => {
-          this.showError(err);
+          if (err.error && err.error.message) {
+            this.showError(err.error.message);
+          } else {
+            this.showError(err.message);
+          }
         }
     );
   }
 
-  private navigateToUser() {
-    this.nav.setRoot("UserPage");
+  private navigateToAttendance() {
+    this.nav.setRoot("AttendancePage");
   }
 
   public logout() {

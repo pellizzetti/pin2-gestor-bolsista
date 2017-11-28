@@ -18,24 +18,25 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="user-list" padding>
+<ion-content class="attendance-list" padding>
   <ion-grid>
     <ion-row>
       <ion-col col-12>
         <ion-list>
           <ion-item-divider sticky>
-            <h1>Lista de usuários</h1>
+            <h1>Lista de atendimentos</h1>
           </ion-item-divider>
-          <ion-item item-start *ngFor="let user of listUsers">
-            <h2>{{ user.name }}</h2>
+          <ion-item item-start *ngFor="let attendance of listAttendances">
+            <h2>{{ attendance.student }}</h2>
+            <span>{{ attendance.description }}</span>
           </ion-item>
           <ion-item item-start *ngIf="emptyList">
-            <h3><i>Nenhum usuário cadastrado</i></h3>
+            <h3><i>Nenhum atendimento cadastrado hoje</i></h3>
           </ion-item>
           <ion-item>
-            <button ion-button outline item-start icon-left (click)="navigateToUser()">
-              <ion-icon name="person"></ion-icon>
-              Cadastrar usuário
+            <button ion-button outline item-start icon-left (click)="navigateToAttendance()">
+              <ion-icon name="paper"></ion-icon>
+              Cadastrar atendimento
             </button>
           </ion-item>
         </ion-list>
