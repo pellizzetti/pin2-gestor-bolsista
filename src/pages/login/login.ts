@@ -49,7 +49,7 @@ export class LoginPage implements OnInit {
         }
       },
       err => {
-        if (err.error) {
+        if (err.error && err.error.message) {
           this.showError(err.error.message);
         } else {
           this.showError(err.message);
