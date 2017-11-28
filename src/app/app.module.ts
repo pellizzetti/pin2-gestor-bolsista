@@ -10,6 +10,7 @@ import { MyApp } from './app.component';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { CheckServiceProvider } from '../providers/check-service/check-service';
 import { UserServiceProvider } from '../providers/user-service/user-service';
+import { AttendanceServiceProvider } from '../providers/attendance-service/attendance-service';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthServiceProvider,
     CheckServiceProvider,
-    UserServiceProvider
+    UserServiceProvider,
+    AttendanceServiceProvider
   ]
 })
 
