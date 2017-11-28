@@ -117,6 +117,10 @@ export class HomePage implements OnInit {
     );
   }
 
+  private navigateToAttendance() {
+    this.nav.setRoot("AttendancePage");
+  }
+
   public logout() {
     this.authService.logout().subscribe(succ => {
       this.nav.setRoot("LoginPage");
