@@ -41,7 +41,7 @@ export class HomePage implements OnInit {
     if (!userDecoded || userDecoded === null) {
       this.nav.setRoot('LoginPage');
     }
-    
+
     this.user = userDecoded;
     await this.getUserCheckInOutList();
   }
@@ -83,7 +83,7 @@ export class HomePage implements OnInit {
 
   private async getUserCheckInOutList() {
     this.showLoading();
-    
+
     this.check.getCheckInOutUser(this.user.userId).subscribe(
         res => {
           if (!res.success) {
@@ -129,8 +129,7 @@ export class HomePage implements OnInit {
 
   private showLoading() {
     this.loadingData = this.loadingCtrl.create({
-      content: 'Buscando dados da API...',
-      dismissOnPageChange: true
+      content: 'Buscando dados da API...'
     });
 
     this.loadingData.present();
