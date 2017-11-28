@@ -14,14 +14,14 @@ export interface AttendanceResponse {
 export interface AttendanceListResponse {
   success: boolean;
   message: string;
-  attendancesList: any;
+  attendanceList: any;
 }
 
 @Injectable()
 export class AttendanceServiceProvider {
   constructor(private http: HttpClient) {}
 
-  public save({ student, description, userId}) {
+  public save({ student, description }, userId) {
     if (student === null || description === null || userId === null) {
       return Observable.throw('Preencha os campos para continuar');
     } else {
