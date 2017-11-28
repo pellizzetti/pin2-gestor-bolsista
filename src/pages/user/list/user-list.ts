@@ -34,11 +34,11 @@ export class UserListPage implements OnInit {
     if (!userDecoded || userDecoded === null) {
       this.nav.setRoot('LoginPage');
     }
-    
+
     if (userDecoded.userLevel === 'bolsista') {
       this.nav.setRoot('HomePage');
     }
-    
+
     await this.getUserList();
   }
 

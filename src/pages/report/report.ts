@@ -15,12 +15,11 @@ export class ReportPage {
     private authService: AuthServiceProvider
    ) {
     this.reports = [
-      { title: 'Usuários', component: 'HomePage' },
+      { title: 'Usuários', component: 'ReportUserPage' },
       { title: 'Relatórios de controle', component: 'AttendanceListPage' },
-      { title: 'Folha ponto', component: 'UserListPage' },
-      { title: 'Relatório semestral', component: 'ReportPage' }
+      { title: 'Folha ponto', component: 'UserListPage' }
     ];
-   }      
+   }
 
   async ngOnInit() {
     const userDecoded = await this.authService.getUserInfo();
@@ -31,6 +30,10 @@ export class ReportPage {
     if (userDecoded.userLevel === 'bolsista') {
       this.nav.setRoot('HomePage');
     }
+  }
+
+  public openReport(report) {
+    this.nav.setRoot(report.component);
   }
 
   public logout() {
