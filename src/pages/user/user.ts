@@ -38,7 +38,7 @@ export class UserPage implements OnInit {
       email: ['', Validators.compose([Validators.required, Validators.email])],
       password: ['', Validators.required],
       level: ['bolsista', Validators.required],
-      area: ['extensao', Validators.required],
+      area: ['apoio-discente', Validators.required],
     });
   }
 
