@@ -22,9 +22,13 @@
   <ion-grid [ngSwitch]="user.userLevel">
     <ion-row *ngSwitchCase="'bolsista'">
       <ion-col col-12>
-        <button ion-button outline item-start full icon-left (click)="navigateToAttendance()">
+        <button *ngIf="user.userArea === 'monitoria'" ion-button outline item-start full icon-left (click)="navigateToAttendance()">
           <ion-icon name="paper"></ion-icon>
           Cadastrar atendimento
+        </button>
+        <button *ngIf="user.userArea === 'pesquisa'" ion-button outline item-start full icon-left (click)="navigateToAttendance()">
+          <ion-icon name="paper"></ion-icon>
+          Preencher relatório semanal
         </button>
       </ion-col>
       <ion-col col-12 col-md-3 text-center>
@@ -50,14 +54,9 @@
         </ion-list>
       </ion-col>
     </ion-row>
-    <ion-row *ngSwitchCase="'gestor'">
-      <ion-col col-12 text-center>
-        Gestor
-      </ion-col>
-    </ion-row>
     <ion-row *ngSwitchDefault>
-      <ion-col col-12 text-center>
-        Carregando...
+      <ion-col col-12>
+        Bem vindo(a), {{ user.userName }} <{{ user.userEmail }}>.
       </ion-col>
     </ion-row>
   </ion-grid>
