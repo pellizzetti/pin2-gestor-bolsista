@@ -11,6 +11,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { CheckServiceProvider } from '../providers/check-service/check-service';
 import { UserServiceProvider } from '../providers/user-service/user-service';
 import { AttendanceServiceProvider } from '../providers/attendance-service/attendance-service';
+import { ResearchReportServiceProvider } from '../providers/research-report-service/research-report-service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { AttendanceServiceProvider } from '../providers/attendance-service/atten
     AuthServiceProvider,
     CheckServiceProvider,
     UserServiceProvider,
-    AttendanceServiceProvider
+    ResearchReportServiceProvider
   ]
 })
 
