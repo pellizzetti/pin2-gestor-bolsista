@@ -54,7 +54,7 @@ export class AttendancePage implements OnInit {
     this.attendanceService.save(this.attendanceForm.value, this.userId).subscribe(
       (res: AttendanceResponse) => {
         if (res.success) {
-          this.nav.setRoot('attendanceListPage');
+          this.nav.setRoot('AttendanceListPage');
         } else if (res.message) {
           this.showError(res.message);
         } else {
