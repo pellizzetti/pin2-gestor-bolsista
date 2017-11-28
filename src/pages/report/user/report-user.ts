@@ -80,8 +80,28 @@ export class ReportUserPage {
 
   private downloadPdf() {
     const report = new jsPDF('p', 'pt');
-    report.autoTable(this.columns, this.listUsers);
+    const rows = this.listUsers.map((user) => {
+      user.area = user.area === null ? '' : user.area;
+
+      return user;
+    })
+
+    report.autoTable(this.columns, rows);
     report.save('Usuarios.pdf');
+  }
+
+  private printPdf() {
+    const report = new jsPDF('p', 'pt');
+    const rows = this.listUsers.map((user) => {
+      user.area = user.area === null ? '' : user.area;
+
+      return user;
+    })
+
+    report.autoTable(this.columns, rows);
+    //report.save('Usuarios.pdf');
+    report.autoPrint();
+    window.open(report.output('bloburl'), '_blank');
   }
 
   public logout() {
