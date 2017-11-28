@@ -28,7 +28,7 @@
           </ion-item-divider>
           <ion-item item-start *ngFor="let attendance of listAttendances">
             <h2>{{ attendance.student }}</h2>
-            <span>{{ attendance.description }}</span>
+            <p>{{ attendance.description }}</p>
           </ion-item>
           <ion-item item-start *ngIf="emptyList">
             <h3><i>Nenhum atendimento cadastrado hoje</i></h3>
