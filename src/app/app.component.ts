@@ -25,7 +25,8 @@ export class MyApp {
     this.pages = [
       { title: 'Início', component: 'HomePage' },
       { title: 'Atendimentos', component: 'AttendanceListPage' },
-      { title: 'Usuários', component: 'UserListPage' }
+      { title: 'Usuários', component: 'UserListPage' },
+      { title: 'Relatórios', component: 'ReportPage' }
     ];
 
     platform.ready().then(() => {
