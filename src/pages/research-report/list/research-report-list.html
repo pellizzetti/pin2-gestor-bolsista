@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar color="dark">
+
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>Relatório semanal de pesquisa</ion-title>
+
+    <ion-buttons end>
+      <button ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="research-report-list" padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <ion-list>
+          <ion-item-divider sticky>
+            <h1>Lista de relatórios de pesquisa</h1>
+          </ion-item-divider>
+          <ion-item item-start *ngFor="let attendance of listAttendances">
+            <h2>{{ attendance.student }}</h2>
+            <p>{{ attendance.description }}</p>
+          </ion-item>
+          <ion-item item-start *ngIf="emptyList">
+            <h3><i>Nenhum relatório de pesquisa cadastrado hoje</i></h3>
+          </ion-item>
+          <ion-item>
+            <button ion-button outline item-start icon-left (click)="navigateToAttendance()">
+              <ion-icon name="paper"></ion-icon>
+              Cadastrar relatório de pesquisa
+            </button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
