@@ -47,7 +47,7 @@ export class ResearchReportPage implements OnInit {
     this.userId = userDecoded.userId;
   }
 
-  private saveAttendance() {
+  private saveResearchReport() {
     this.showLoading();
 
     this.researchReportService.save(this.researchReportForm.value, this.userId).subscribe(
