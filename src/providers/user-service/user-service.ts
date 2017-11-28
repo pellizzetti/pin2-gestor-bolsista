@@ -21,8 +21,7 @@ export interface UserListResponse {
 export class UserServiceProvider {
   constructor(private http: HttpClient) {}
 
-  public save({ name, email, password, level }) {
-    console.log(name);
+  public save({ name, email, password, level, area }) {
     if (name === null || email === null || password === null || level === null) {
       return Observable.throw('Preencha os campos para continuar');
     } else {
@@ -30,7 +29,8 @@ export class UserServiceProvider {
         name,
         email,
         password,
-        level
+        level,
+        area: level === 'bolsista' ? area : null
       };
       
       return this.http.post<UserResponse>(`${API_URL}/user`, body).map(res => res);

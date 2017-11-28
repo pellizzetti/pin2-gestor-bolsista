@@ -45,6 +45,15 @@
               <ion-option value="orientador">Orientador</ion-option>
             </ion-select>
           </ion-item>
+          <ion-item *ngIf="['gestor', 'orientador'].includes(userLevel) && userForm.value.level === 'bolsista'">
+            <ion-label>Área</ion-label>
+            <ion-select formControlName="area" interface="popover">
+              <ion-option value="apoio-discente">Apoio discente</ion-option>
+              <ion-option value="extensao">Extensão</ion-option>
+              <ion-option value="monitoria">Monitoria</ion-option>
+              <ion-option value="pesquisa">Pesquisa</ion-option>
+            </ion-select>
+          </ion-item>
           <ion-buttons end>
             <button ion-button block type="submit" [disabled]="!userForm.valid">Salvar</button>
           </ion-buttons>
