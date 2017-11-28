@@ -7,7 +7,7 @@
       </button>
     </ion-buttons>
 
-    <ion-title>Usuários</ion-title>
+    <ion-title>Atendimentos</ion-title>
 
     <ion-buttons end>
       <button ion-button (click)="logout()">
@@ -18,35 +18,24 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="user" padding>
+<ion-content class="attendanceForm" padding>
   <ion-grid>
     <ion-row>
       <ion-col col-12>     
-        <form [formGroup]="user" (ngSubmit)="saveUser()">
+        <form [formGroup]="attendanceForm" (ngSubmit)="saveAttendance()">
           <ion-item-divider sticky>
-              <h1>Cadastrar usuário</h1>
+              <h1>Cadastrar atendimento</h1>
             </ion-item-divider>
           <ion-item>
-            <ion-label>Nome</ion-label>
-            <ion-input type="text" formControlName="name"></ion-input>
+            <ion-label>Estudante</ion-label>
+            <ion-input type="text" formControlName="student"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label>E-mail</ion-label>
-            <ion-input type="email" formControlName="email"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Senha</ion-label>
-            <ion-input type="text" formControlName="password"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label>Nível</ion-label>
-            <ion-select formControlName="level" interface="popover">
-              <ion-option value="bolsista">Bolsista</ion-option>
-              <ion-option value="orientador">Orientador</ion-option>
-            </ion-select>
+            <ion-label>Descrição do atendimento</ion-label>
+            <ion-textarea formControlName="description"></ion-textarea>
           </ion-item>
           <ion-buttons end>
-            <button ion-button block type="submit" [disabled]="!user.valid">Salvar</button>
+            <button ion-button block type="submit" [disabled]="!attendanceForm.valid">Salvar</button>
           </ion-buttons>
         </form>
       </ion-col>

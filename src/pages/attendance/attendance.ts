@@ -13,7 +13,7 @@ import {
 } from '@angular/forms';
 
 import { AuthServiceProvider } from "../../providers/auth-service/auth-service";
-import { UserServiceProvider, UserResponse, UserListResponse } from "../../providers/user-service/user-service";
+import { AttendanceServiceProvider, AttendanceResponse } from "../../providers/attendance-service/attendance-service";
 
 @IonicPage()
 @Component({
@@ -21,22 +21,21 @@ import { UserServiceProvider, UserResponse, UserListResponse } from "../../provi
   templateUrl: "attendance.html"
 })
 export class AttendancePage implements OnInit {
-  user: FormGroup;
+  attendanceForm: FormGroup;
   loading: Loading;
+  userId: number;
 
   constructor(
     private nav: NavController,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private authService: AuthServiceProvider,
-    private userService: UserServiceProvider,
+    private attendanceService: AttendanceServiceProvider,
     private formBuilder: FormBuilder
   ) {
-    this.user = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', Validators.compose([Validators.required, Validators.email])],
-      password: ['', Validators.required],
-      level: ['', Validators.required],
+    this.attendanceForm = this.formBuilder.group({
+      student: ['', Validators.required],
+      description: ['', Validators.required]
     });
   }
 
@@ -45,15 +44,17 @@ export class AttendancePage implements OnInit {
     if (!userDecoded || userDecoded === null) {
       this.nav.setRoot('LoginPage');
     }
+
+    this.userId = userDecoded.userId;
   }
 
-  private saveUser() {
+  private saveAttendance() {
     this.showLoading();
 
-    this.userService.save(this.user.value).subscribe(
-      (res: UserResponse) => {
+    this.attendanceService.save(this.attendanceForm.value, this.userId).subscribe(
+      (res: AttendanceResponse) => {
         if (res.success) {
-          this.nav.setRoot('UserListPage');
+          this.nav.setRoot('attendanceListPage');
         } else if (res.message) {
           this.showError(res.message);
         } else {
