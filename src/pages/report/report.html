@@ -7,7 +7,7 @@
       </button>
     </ion-buttons>
 
-    <ion-title>Início</ion-title>
+    <ion-title>Relatórios</ion-title>
 
     <ion-buttons end>
       <button ion-button (click)="logout()">
@@ -19,6 +19,17 @@
 </ion-header>
 
 <ion-content class="report" padding>
-  <h3>Bem-vindo, {{username}}!</h3>
-  Seu e-mail é: {{email}}
+  <ion-card *ngFor="let report of reports">
+    <ion-card-content>
+      <ion-card-title>
+        {{ report.title }}
+      </ion-card-title>
+      <ion-buttons end>
+        <button ion-button clear icon-right (click)="openReport(report)">
+          Acessar
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
