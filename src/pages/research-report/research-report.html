@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-navbar color="dark">
+
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title>Relatório semanal de pesquisa</ion-title>
+
+    <ion-buttons end>
+      <button ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="researchReportForm" padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12>
+        <form [formGroup]="researchReportForm" (ngSubmit)="saveResearchReport()">
+          <ion-item-divider sticky>
+              <h1>Cadastrar relatório de pesquisa</h1>
+            </ion-item-divider>
+          <ion-item>
+            <ion-label>Descrição</ion-label>
+            <ion-textarea formControlName="description"></ion-textarea>
+          </ion-item>
+          <ion-buttons end>
+            <button ion-button block type="submit" [disabled]="!researchReportForm.valid">Salvar</button>
+          </ion-buttons>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
