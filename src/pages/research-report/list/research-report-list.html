@@ -26,15 +26,14 @@
           <ion-item-divider sticky>
             <h1>Lista de relatórios de pesquisa</h1>
           </ion-item-divider>
-          <ion-item item-start *ngFor="let attendance of listAttendances">
-            <h2>{{ attendance.student }}</h2>
-            <p>{{ attendance.description }}</p>
+          <ion-item item-start *ngFor="let researchReport of listResearchReports">
+            <h3>{{ researchReport.description }}</h3>
           </ion-item>
           <ion-item item-start *ngIf="emptyList">
             <h3><i>Nenhum relatório de pesquisa cadastrado hoje</i></h3>
           </ion-item>
           <ion-item>
-            <button ion-button outline item-start icon-left (click)="navigateToAttendance()">
+            <button ion-button outline item-start icon-left (click)="navigateToResearchReport()">
               <ion-icon name="paper"></ion-icon>
               Cadastrar relatório de pesquisa
             </button>
