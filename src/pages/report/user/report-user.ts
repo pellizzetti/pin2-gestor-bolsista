@@ -86,7 +86,7 @@ export class ReportUserPage {
       return user;
     })
 
-    report.autoTable(this.columns, rows);
+    report.autoTable(this.columns, rows, { headerStyles: { fillColor: [87, 132, 88] } });
     report.save('Usuarios.pdf');
   }
 
@@ -98,8 +98,7 @@ export class ReportUserPage {
       return user;
     })
 
-    report.autoTable(this.columns, rows);
-    //report.save('Usuarios.pdf');
+    report.autoTable(this.columns, rows, { headerStyles: { fillColor: [87, 132, 88] } });
     report.autoPrint();
     window.open(report.output('bloburl'), '_blank');
   }
